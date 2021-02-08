@@ -3,21 +3,30 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 
-import useInput from '@/utils/hooks/useInput';
+import useForm from '@/utils/hooks/useForm';
+import { signUp } from '@/api/auth';
 
 const SignUp: React.FC = () => {
-  const [email, setEmail] = useInput('');
-  const [password, setPassword] = useInput('');
+  const [data, setData] = useForm({
+    name: '',
+    email: '',
+    password: '',
+    phoneNumber: '',
+  });
 
   const handleSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  }, []);
+
+    signUp(data);
+  }, [data]);
 
   return (
     <Page>
       <Wrapper onSubmit={handleSubmit}>
-        <TextField value={email} onChange={setEmail} label="Email" type="email" name="email" autoComplete="on" variant="filled" color="primary" />
-        <TextField value={password} onChange={setPassword} label="Password" type="password" variant="filled" color="primary" />
+        <TextField value={data.name} onChange={setData('name')} label="Name" variant="filled" color="primary" />
+        <TextField value={data.email} onChange={setData('email')} label="Email" type="email" name="email" autoComplete="on" variant="filled" color="primary" />
+        <TextField value={data.password} onChange={setData('password')} label="Password" type="password" variant="filled" color="primary" />
+        <TextField value={data.phoneNumber} onChange={setData('phoneNumber')} label="Phone Number" type="number" variant="filled" color="primary" />
         <SubmitButton variant="contained" color="primary" type="submit">Sign Up</SubmitButton>
         <TextWrapper>
           <span>Already have an account?</span>
