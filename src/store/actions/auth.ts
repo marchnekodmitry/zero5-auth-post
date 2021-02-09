@@ -15,7 +15,8 @@ export type AuthActions =
   | ReturnType<typeof authActions.setIsPending>
   | ReturnType<typeof authActions.setIsResolved>
   | ReturnType<typeof authActions.setIsRejected>
-  | ReturnType<typeof authActions.setUser>;
+  | ReturnType<typeof authActions.setUser>
+  | ReturnType<typeof authActions.logout>;
 
 export const signUpAction = (data: ICredentials): AsyncAction => async (dispatch) => {
   try {
@@ -54,6 +55,19 @@ export const meAction = (): AsyncAction => async (dispatch) => {
     dispatch(authActions.setUser(responseData));
 
     return responseData;
+  } catch (e) {
+    return e;
+  }
+};
+
+export const logoutAction = (): AsyncAction => async (dispatch) => {
+  try {
+    setAccessToken();
+    setRefreshToken();
+
+    dispatch(authActions.logout());
+
+    return true;
   } catch (e) {
     return e;
   }

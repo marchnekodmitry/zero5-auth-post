@@ -37,6 +37,13 @@ export class AuthReducer extends ImmerReducer<AuthState> {
   setUser(user: IUser) {
     this.draftState.user = user;
   }
+
+  logout() {
+    this.draftState.isPending = false;
+    this.draftState.isResolved = false;
+    this.draftState.isRejected = false;
+    this.draftState.user = null;
+  }
 }
 
 export default createReducerFunction(AuthReducer, initialState);
