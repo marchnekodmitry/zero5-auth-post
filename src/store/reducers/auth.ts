@@ -1,18 +1,21 @@
+import { IUser } from '@/api/models/user';
 import { createReducerFunction, ImmerReducer } from 'immer-reducer';
 
-export interface LoginState {
+export interface AuthState {
   isPending: boolean;
   isResolved: boolean;
   isRejected: boolean;
+  user: IUser | null;
 }
 
-const initialState: LoginState = {
+const initialState: AuthState = {
   isPending: false,
   isResolved: false,
   isRejected: false,
+  user: null,
 };
 
-export class LoginReducer extends ImmerReducer<LoginState> {
+export class AuthReducer extends ImmerReducer<AuthState> {
   setIsPending() {
     this.draftState.isPending = true;
     this.draftState.isResolved = false;
@@ -22,12 +25,18 @@ export class LoginReducer extends ImmerReducer<LoginState> {
   setIsResolved() {
     this.draftState.isPending = false;
     this.draftState.isResolved = true;
+    this.draftState.isRejected = false;
   }
 
   setIsRejected() {
     this.draftState.isPending = false;
+    this.draftState.isResolved = false;
     this.draftState.isRejected = true;
+  }
+
+  setUser(user: IUser) {
+    this.draftState.user = user;
   }
 }
 
-export default createReducerFunction(LoginReducer, initialState);
+export default createReducerFunction(AuthReducer, initialState);

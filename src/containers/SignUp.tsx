@@ -1,12 +1,17 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 
 import useForm from '@/utils/hooks/useForm';
-import { signUp } from '@/api/auth';
+
+import { signUpAction } from '@/store/actions/auth';
 
 const SignUp: React.FC = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [data, setData] = useForm({
     name: '',
     email: '',
@@ -14,11 +19,13 @@ const SignUp: React.FC = () => {
     phoneNumber: '',
   });
 
-  const handleSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    signUp(data);
-  }, [data]);
+    await dispatch(signUpAction(data));
+
+    history.push('/');
+  }, [data, dispatch, history]);
 
   return (
     <Page>

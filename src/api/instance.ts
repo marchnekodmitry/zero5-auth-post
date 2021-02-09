@@ -4,6 +4,9 @@ import { getAccessToken } from '@/utils/tokens';
 
 const instance = axios.create({
   baseURL: process.env.BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 instance.interceptors.request.use(
@@ -11,7 +14,7 @@ instance.interceptors.request.use(
     const accessToken = getAccessToken();
 
     // eslint-disable-next-line no-param-reassign
-    config.headers.authorization = `Bearer ${accessToken}`;
+    config.headers.Authorization = `Bearer ${accessToken}`;
 
     return config;
   },
