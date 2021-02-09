@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Typography } from '@material-ui/core';
 
 import useForm from '@/utils/hooks/useForm';
 
@@ -28,6 +28,7 @@ const SignIn: React.FC = () => {
   return (
     <Page>
       <Wrapper onSubmit={handleSubmit}>
+        <Typography variant="h2" align="center" color="primary">POST</Typography>
         <TextField value={data.email} onChange={setData('email')} label="Email" type="email" name="email" autoComplete="on" variant="filled" color="primary" />
         <TextField value={data.password} onChange={setData('password')} label="Password" type="password" variant="filled" color="primary" />
         <SubmitButton variant="contained" color="primary" type="submit">Sign In</SubmitButton>

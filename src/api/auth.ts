@@ -13,4 +13,6 @@ export const signIn = (data: Pick<ICredentials, 'email' | 'password'>) => instan
   refreshToken: string;
 }>('/sign-in', data);
 
-export const zeroAuth = () => instance.get<string>('/zero/auth');
+export const zeroAuth = () => instance.get<{
+  link: string;
+}>('/zero/auth');

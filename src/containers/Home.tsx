@@ -6,45 +6,49 @@ import { IUser } from '@/api/models/user';
 
 import { selectAuthUser } from '@/store/selectors/auth';
 import { zeroAuth } from '@/api/auth';
+import { Button } from '@material-ui/core';
 
 interface Props {}
 
 const Home: React.FC<Props> = () => {
-  // const [link, setLink] = React.useState('');
-
   const user = useSelector(selectAuthUser);
 
-  const handler = React.useCallback(async () => {
-    console.log(await zeroAuth());
+  const linkHandler = React.useCallback(async () => {
+    const { data } = await zeroAuth();
+
+    window.open(data.link, '_blank');
   }, []);
-
-  // React.useEffect(() => {
-  //   const start = async () => {
-  //     const { data } = await zeroAuth();
-
-  //     setLink(data);
-  //   };
-
-  //   start();
-  // }, []);
 
   if (!user) return null;
 
   return (
-    <HomeStyled>
-      {Object.keys(user).map((key) => (
-        <li>
-          {key}
-          :
-          {' '}
-          {user[key as keyof IUser]}
-        </li>
-      ))}
-      <button onClick={handler}>Go to zero5</button>
-    </HomeStyled>
+    <Page>
+      <HomeStyled>
+        {Object.keys(user).map((key) => (
+          <li>
+            {key}
+            :
+            {' '}
+            {user[key as keyof IUser]}
+          </li>
+        ))}
+        <StyledButton onClick={linkHandler} type="button" variant="outlined" fullWidth>Go to zero5</StyledButton>
+      </HomeStyled>
+    </Page>
   );
 };
 
+const Page = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+`;
+
 const HomeStyled = styled.div``;
+
+const StyledButton = styled(Button)`
+  margin-top: 10px;
+`;
 
 export default Home;

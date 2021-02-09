@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development PORT=3000 webpack-dev-server",
+    "start": "cross-env NODE_ENV=development PORT=3001 webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "server": "node ."
   },
   "keywords": [],
   "author": "Lambda Team",

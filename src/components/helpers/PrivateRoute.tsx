@@ -34,16 +34,13 @@ const PrivateRoute: React.FC<Props> = (props) => {
   React.useEffect(() => {
     const start = async () => {
       try {
-        if (user) {
-          setAllowRender(true);
-          return;
+        if (!user) {
+          await dispatch(meAction());
         }
-
-        await dispatch(meAction());
-
-        setAllowRender(true);
       } catch (e) {
         console.error(e);
+      } finally {
+        setAllowRender(true);
       }
     };
 
