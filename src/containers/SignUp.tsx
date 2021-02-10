@@ -12,19 +12,21 @@ const SignUp: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [loading, setLoading] = React.useState(false);
   const [data, setData] = useForm({
     name: '',
     email: '',
     password: '',
-    phoneNumber: '',
   });
 
   const handleSubmit = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await dispatch(signUpAction(data));
+    setLoading(true);
 
-    history.push('/');
+    await dispatch(signUpAction(data, history));
+
+    setLoading(false);
   }, [data, dispatch, history]);
 
   return (
@@ -34,8 +36,7 @@ const SignUp: React.FC = () => {
         <TextField value={data.name} onChange={setData('name')} label="Name" variant="filled" color="primary" />
         <TextField value={data.email} onChange={setData('email')} label="Email" type="email" name="email" autoComplete="on" variant="filled" color="primary" />
         <TextField value={data.password} onChange={setData('password')} label="Password" type="password" variant="filled" color="primary" />
-        <TextField value={data.phoneNumber} onChange={setData('phoneNumber')} label="Phone Number" type="number" variant="filled" color="primary" />
-        <SubmitButton variant="contained" color="primary" type="submit">Sign Up</SubmitButton>
+        <SubmitButton variant="contained" color="primary" type="submit" disabled={loading}>{loading ? 'Loading...' : 'Sign Up' }</SubmitButton>
         <TextWrapper>
           <span>Already have an account?</span>
           {' '}

@@ -18,7 +18,7 @@ export type AuthActions =
   | ReturnType<typeof authActions.setUser>
   | ReturnType<typeof authActions.logout>;
 
-export const signUpAction = (data: ICredentials): AsyncAction => async (dispatch) => {
+export const signUpAction = (data: ICredentials, history: any): AsyncAction => async (dispatch) => {
   try {
     dispatch(authActions.setIsPending());
 
@@ -28,12 +28,14 @@ export const signUpAction = (data: ICredentials): AsyncAction => async (dispatch
     setRefreshToken(responseData.refreshToken);
 
     dispatch(authActions.setIsResolved());
+
+    history.push('/');
   } catch (e) {
     dispatch(authActions.setIsRejected());
   }
 };
 
-export const signInAction = (data: Pick<ICredentials, 'email' | 'password'>): AsyncAction => async (dispatch) => {
+export const signInAction = (data: Pick<ICredentials, 'email' | 'password'>, history: any): AsyncAction => async (dispatch) => {
   try {
     dispatch(authActions.setIsPending());
 
@@ -43,6 +45,8 @@ export const signInAction = (data: Pick<ICredentials, 'email' | 'password'>): As
     setRefreshToken(responseData.refreshToken);
 
     dispatch(authActions.setIsResolved());
+
+    history.push('/');
   } catch (e) {
     dispatch(authActions.setIsRejected());
   }
