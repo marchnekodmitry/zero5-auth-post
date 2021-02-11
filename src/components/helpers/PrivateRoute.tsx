@@ -8,6 +8,8 @@ import {
 import { meAction } from '@/store/actions/auth';
 import { selectAuthUser } from '@/store/selectors/auth';
 
+import { getAccessToken, getRefreshToken } from '@/utils/tokens';
+
 interface Props extends RouteProps {}
 
 const PrivateRoute: React.FC<Props> = (props) => {
@@ -34,7 +36,7 @@ const PrivateRoute: React.FC<Props> = (props) => {
   React.useEffect(() => {
     const start = async () => {
       try {
-        if (!user) {
+        if (!user && getAccessToken() && getRefreshToken()) {
           await dispatch(meAction());
         }
       } catch (e) {
